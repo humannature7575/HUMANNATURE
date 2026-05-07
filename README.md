@@ -72,6 +72,18 @@ This project is optimized for **Firebase App Hosting**.
    npm run firebase:deploy
    ```
 
+### Netlify Deployment
+
+This project is fully compatible with **Netlify**.
+
+1. Connect your GitHub repository to Netlify.
+2. The `netlify.toml` file will automatically configure the build settings.
+3. Configure the **Environment Variables** in the Netlify Dashboard:
+   - All variables listed in `.env.example`.
+   - Ensure `FIREBASE_PRIVATE_KEY` is pasted with literal `\n` characters if using a single-line input.
+
+**Note**: Netlify will use the Essential Next.js plugin automatically for Next.js 15/16.
+
 ## 🛡 Security Rules
 
 The project includes pre-configured security rules for Firestore and Storage:
