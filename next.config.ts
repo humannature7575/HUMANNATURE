@@ -42,6 +42,7 @@ const nextConfig: NextConfig = {
     ],
   },
   serverExternalPackages: ["firebase-admin"],
+  output: 'standalone',
 };
 
 export default nextConfig;

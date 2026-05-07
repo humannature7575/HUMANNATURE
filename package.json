@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev -H 0.0.0.0 -p 3000",
-    "build": "next build --webpack",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "admin:set-claim": "node scripts/set-admin-claim.mjs",
