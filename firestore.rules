@@ -1,0 +1,173 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn() && request.auth.token.admin == true;
+    }
+
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function hasNoPrivilegeFields(data) {
+      return !data.keys().hasAny(['admin', 'isAdmin', 'role', 'roles', 'claims', 'permissions']);
+    }
+
+    function validString(value, max) {
+      return value is string && value.size() <= max;
+    }
+
+    function validOptionalString(data, field, max) {
+      return !(field in data) || (data[field] is string && data[field].size() <= max);
+    }
+
+    function validOptionalBool(data, field) {
+      return !(field in data) || data[field] is bool;
+    }
+
+    function validOptionalNumber(data, field, min, max) {
+      return !(field in data) || (data[field] is number && data[field] >= min && data[field] <= max);
+    }
+
+    function validOptionalTimestamp(data, field) {
+      return !(field in data) || data[field] is timestamp;
+    }
+
+    function validOptionalStringList(data, field, maxItems, maxLength) {
+      return !(field in data) || (data[field] is list && data[field].size() <= maxItems);
+    }
+
+    function validUserProfile(data) {
+      return hasNoPrivilegeFields(data)
+        && data.keys().hasOnly(['firstName', 'lastName', 'phone', 'email', 'createdAt', 'favorites'])
+        && validOptionalString(data, 'firstName', 80)
+        && validOptionalString(data, 'lastName', 80)
+        && validOptionalString(data, 'phone', 40)
+        && validOptionalString(data, 'email', 254)
+        && validOptionalTimestamp(data, 'createdAt')
+        && validOptionalStringList(data, 'favorites', 200, 120);
+    }
+
+    function validAddress(data) {
+      return data.keys().hasOnly(['title', 'fullName', 'phone', 'city', 'district', 'fullAddress', 'isDefault', 'createdAt'])
+        && data.keys().hasAll(['title', 'fullName', 'phone', 'city', 'district', 'fullAddress'])
+        && validString(data.title, 80)
+        && validString(data.fullName, 120)
+        && validString(data.phone, 40)
+        && validString(data.city, 80)
+        && validString(data.district, 80)
+        && validString(data.fullAddress, 600)
+        && validOptionalBool(data, 'isDefault')
+        && validOptionalTimestamp(data, 'createdAt');
+    }
+
+    function validPaymentMethod(method) {
+      return method in ['trendyol', 'shopier', 'bank', 'cod'];
+    }
+
+    function validOrder(data) {
+      return data.keys().hasOnly([
+          'orderId', 'userId', 'customerName', 'customerPhone', 'items',
+          'subtotal', 'extraFee', 'total', 'totalAmount', 'status',
+          'statusColor', 'paymentMethod', 'address', 'isRead', 'createdAt'
+        ])
+        && data.keys().hasAll(['userId', 'items', 'total', 'status', 'paymentMethod', 'isRead', 'createdAt'])
+        && data.userId == request.auth.uid
+        && data.items is list
+        && data.items.size() > 0
+        && data.items.size() <= 100
+        && data.total is number
+        && data.total >= 0
+        && data.total <= 10000000
+        && data.status is string
+        && data.status.size() <= 80
+        && data.paymentMethod is string
+        && validPaymentMethod(data.paymentMethod)
+        && data.isRead is bool
+        && data.createdAt is timestamp
+        && validOptionalString(data, 'orderId', 80)
+        && validOptionalString(data, 'customerName', 160)
+        && validOptionalString(data, 'customerPhone', 40)
+        && validOptionalString(data, 'statusColor', 80)
+        && validOptionalNumber(data, 'subtotal', 0, 10000000)
+        && validOptionalNumber(data, 'extraFee', 0, 10000000)
+        && validOptionalNumber(data, 'totalAmount', 0, 10000000)
+        && (!('address' in data) || data.address is map);
+    }
+
+    function validOrderCreate(data) {
+      return validOrder(data)
+        && data.createdAt == request.time
+        && data.isRead == false;
+    }
+
+    function publicSetting(settingId) {
+      return settingId in ['store', 'categories', 'featuredCategories', 'paymentMethods', 'socialMedia'];
+    }
+
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /subcategories/{subcategoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /settings/{settingId} {
+      allow read: if publicSetting(settingId) || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow create: if isOwner(userId)
+        && validUserProfile(request.resource.data);
+      allow read: if isOwner(userId) || isAdmin();
+      allow update: if (isOwner(userId) || isAdmin())
+        && validUserProfile(request.resource.data)
+        && (!('email' in request.resource.data) || request.resource.data.email == resource.data.email)
+        && (!('createdAt' in request.resource.data) || request.resource.data.createdAt == resource.data.createdAt);
+      allow delete: if isAdmin();
+
+      match /addresses/{addressId} {
+        allow read: if isOwner(userId) || isAdmin();
+        allow create, update: if isOwner(userId)
+          && validAddress(request.resource.data);
+        allow delete: if isOwner(userId) || isAdmin();
+        allow write: if isAdmin();
+      }
+
+      match /customer_orders/{orderId} {
+        allow create: if isOwner(userId)
+          && validOrderCreate(request.resource.data);
+        allow read: if isOwner(userId) || isAdmin();
+        allow update, delete: if isAdmin();
+      }
+
+      match /{document=**} {
+        allow read, write: if isAdmin();
+      }
+    }
+
+    match /orders/{orderId} {
+      allow create: if signedIn()
+        && validOrderCreate(request.resource.data);
+      allow read: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
+      allow update, delete: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

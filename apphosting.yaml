@@ -1,0 +1,23 @@
+kind: AppHostingYaml
+apiVersion: v1beta
+env:
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: "AIzaSyB70yDf4WMVB5opibIAcSErWAhOlVU8EWM"
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: "humannature-291de.firebaseapp.com"
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: "humannature-291de"
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: "humannature-291de.firebasestorage.app"
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "282805018834"
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: "1:282805018834:web:06dc77e7c1cc9074d1cd0b"
+  - variable: NEXT_PUBLIC_FIREBASE_DATABASE_ID
+    value: "humannature"
+  - variable: NEXT_PUBLIC_BASE_URL
+    value: "https://humannature-store--humannature-291de.us-central1.hosted.app"
+  - variable: FIREBASE_CLIENT_EMAIL
+    value: "firebase-adminsdk-fbsvc@humannature-291de.iam.gserviceaccount.com"
+  - variable: FIREBASE_PRIVATE_KEY
+    secret: FIREBASE_PRIVATE_KEY

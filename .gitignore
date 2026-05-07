@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Netlify
+.netlify/
+
+# Firebase deploy output
+.firebase/
+firebase-debug.log
+
+# Local environment files
+.env
+.env*.local
+
+# Test and coverage output
+coverage/
+test-results/
+playwright-report/
+
+# Local scratch files
+scratch/
+

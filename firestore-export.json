@@ -1,0 +1,375 @@
+{
+  "products": [
+    {
+      "id": "199efe1c-7332-4a73-be97-ba0ea0b87dd1",
+      "title": "Rahat spor giyim",
+      "images": [
+        "https://res.cloudinary.com/dgyryuy30/image/upload/v1776975855/wxhsyc9oqkxof1plhikt.png",
+        "https://res.cloudinary.com/dgyryuy30/image/upload/v1776975856/o8tefw39ciewh5lyyhmt.png"
+      ],
+      "fabricType": "Pamuk-Polyester",
+      "filters": null,
+      "subCategory": "spor-takim",
+      "category": "giyim",
+      "slug": "rahat-spor-giyim-beyaz",
+      "variants": [
+        {
+          "size": "M",
+          "stock": 1,
+          "color": "Beyaz"
+        },
+        {
+          "stock": 1,
+          "color": "Beyaz",
+          "size": "L"
+        }
+      ],
+      "description": "Günlük konforu ve şıklığı bir araya getiren bu spor takım, aktif yaşam tarzına uyum sağlamak için tasarlandı. Yumuşak ve nefes alabilen kumaşı sayesinde gün boyu ferahlık sunarken, esnek yapısı hareket özgürlüğü sağlar. Modern kesimi ile hem spor yaparken hem de günlük kombinlerde rahatlıkla tercih edilebilir.\nÜst ve alt parçadan oluşan bu takım, minimal ve şık detaylarıyla öne çıkar. Spor salonunda, yürüyüşte veya evde dinlenirken maksimum rahatlık sunar. Dayanıklı kumaşı sayesinde uzun süreli kullanım için idealdir.\nÖne Çıkan Özellikler:\nNefes alabilen ve terletmeyen kumaş\nEsnek ve rahat yapı\nGünlük kullanıma uygun modern tasarım\nUzun ömürlü ve dayanıklı malzeme\nKonfor ve stilin mükemmel birleşimi!",
+      "productCode": "HN00102",
+      "isNewArrival": true,
+      "groupId": "cdf9e0d7-f5a6-42e7-b45f-bce6e527be29",
+      "colorCount": 2,
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1776975851,
+        "nanoseconds": 741000000
+      },
+      "collarType": "Bisiklet Yaka",
+      "imageUrl": "https://res.cloudinary.com/dgyryuy30/image/upload/v1776975855/wxhsyc9oqkxof1plhikt.png",
+      "isTrending": true,
+      "tip": "Basic",
+      "discountPrice": 2200,
+      "colorName": "Beyaz",
+      "cartPrice": 1245,
+      "stockCount": 28,
+      "originalPrice": 2500,
+      "fit": "Slim Fit",
+      "salesCount": 0
+    },
+    {
+      "id": "31eac4fd-2f3c-4aab-ac77-b022d024979b",
+      "originalPrice": 2999,
+      "salesCount": 0,
+      "fit": "Slim Fit",
+      "isNewArrival": true,
+      "variants": [
+        {
+          "size": "S",
+          "stock": 1,
+          "color": "Siyah"
+        },
+        {
+          "stock": 1,
+          "color": "Siyah",
+          "size": "M"
+        },
+        {
+          "size": "40",
+          "color": "Siyah",
+          "stock": 1
+        },
+        {
+          "stock": 1,
+          "color": "Siyah",
+          "size": "36"
+        }
+      ],
+      "tip": "Polo",
+      "slug": "huhuhygtfr-siyah",
+      "stockCount": 20,
+      "description": "MVNVNMlşKNBÇHJCGMFG",
+      "cartPrice": 1499,
+      "colorName": "Siyah",
+      "discountPrice": 1999,
+      "collarType": "Polo Yaka",
+      "category": "giyim",
+      "subCategory": "tisort",
+      "filters": null,
+      "isTrending": true,
+      "fabricType": "Yün",
+      "imageUrl": "https://res.cloudinary.com/dgyryuy30/image/upload/v1776899985/bog7gkpwxnyoraa2gtff.png",
+      "title": "HUHUHYGTFR",
+      "groupId": "266b80d8-c605-49a3-9779-28144dc38cdd",
+      "images": [
+        "https://res.cloudinary.com/dgyryuy30/image/upload/v1776899985/bog7gkpwxnyoraa2gtff.png",
+        "https://res.cloudinary.com/dgyryuy30/image/upload/v1776899986/yym1ituheipui67zljzy.png",
+        "https://res.cloudinary.com/dgyryuy30/image/upload/v1776899987/sz63tkhaujypgrw8tjbb.png"
+      ],
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1776899984,
+        "nanoseconds": 454000000
+      },
+      "colorCount": 2
+    },
+    {
+      "id": "3f3a6d43-4efb-4e80-aa42-d8b3c046cc03",
+      "title": "Rahat spor giyim",
+      "groupId": "cdf9e0d7-f5a6-42e7-b45f-bce6e527be29",
+      "images": [
+        "https://res.cloudinary.com/dgyryuy30/image/upload/v1776975852/nkiv8hmdbuasrkgyjmle.png",
+        "https://res.cloudinary.com/dgyryuy30/image/upload/v1776975853/yem6bnwhfmxbq2n4ikjv.png"
+      ],
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1776975851,
+        "nanoseconds": 741000000
+      },
+      "colorCount": 2,
+      "collarType": "Bisiklet Yaka",
+      "category": "giyim",
+      "subCategory": "spor-takim",
+      "isTrending": true,
+      "filters": null,
+      "fabricType": "Pamuk-Polyester",
+      "imageUrl": "https://res.cloudinary.com/dgyryuy30/image/upload/v1776975852/nkiv8hmdbuasrkgyjmle.png",
+      "variants": [
+        {
+          "color": "Siyah",
+          "stock": 1,
+          "size": "M"
+        },
+        {
+          "color": "Siyah",
+          "stock": 1,
+          "size": "L"
+        }
+      ],
+      "tip": "Basic",
+      "slug": "rahat-spor-giyim-siyah",
+      "stockCount": 30,
+      "description": "Günlük konforu ve şıklığı bir araya getiren bu spor takım, aktif yaşam tarzına uyum sağlamak için tasarlandı. Yumuşak ve nefes alabilen kumaşı sayesinde gün boyu ferahlık sunarken, esnek yapısı hareket özgürlüğü sağlar. Modern kesimi ile hem spor yaparken hem de günlük kombinlerde rahatlıkla tercih edilebilir.\nÜst ve alt parçadan oluşan bu takım, minimal ve şık detaylarıyla öne çıkar. Spor salonunda, yürüyüşte veya evde dinlenirken maksimum rahatlık sunar. Dayanıklı kumaşı sayesinde uzun süreli kullanım için idealdir.\nÖne Çıkan Özellikler:\nNefes alabilen ve terletmeyen kumaş\nEsnek ve rahat yapı\nGünlük kullanıma uygun modern tasarım\nUzun ömürlü ve dayanıklı malzeme\nKonfor ve stilin mükemmel birleşimi!",
+      "cartPrice": 1245,
+      "colorName": "Siyah",
+      "discountPrice": 2200,
+      "originalPrice": 2500,
+      "salesCount": 0,
+      "fit": "Slim Fit",
+      "isNewArrival": true
+    },
+    {
+      "id": "e297f451-0bc9-4302-bcdc-7cefa8814c0a",
+      "colorCount": 2,
+      "createdAt": {
+        "type": "firestore/timestamp/1.0",
+        "seconds": 1776899984,
+        "nanoseconds": 454000000
+      },
+      "groupId": "266b80d8-c605-49a3-9779-28144dc38cdd",
+      "imageUrl": "https://res.cloudinary.com/dgyryuy30/image/upload/v1776899988/oigzkdgx674wlvmyobal.png",
+      "isTrending": true,
+      "collarType": "Bisiklet Yaka",
+      "discountPrice": 1999,
+      "colorName": "Beyaz",
+      "cartPrice": 1499,
+      "stockCount": -1,
+      "tip": "Düz",
+      "fit": "Oversize",
+      "salesCount": 0,
+      "originalPrice": 2999,
+      "images": [
+        "https://res.cloudinary.com/dgyryuy30/image/upload/v1776899988/oigzkdgx674wlvmyobal.png",
+        "https://res.cloudinary.com/dgyryuy30/image/upload/v1776899989/ijllou8hygo8hxr7ax9c.png",
+        "https://res.cloudinary.com/dgyryuy30/image/upload/v1776899990/j0ffrbnj5rqwyjqbv7yh.png"
+      ],
+      "title": "HUHUHYGTFR",
+      "fabricType": "Keten",
+      "filters": null,
+      "subCategory": "tisort",
+      "category": "giyim",
+      "description": "MVNVNMlşKNBÇHJCGMFG",
+      "slug": "huhuhygtfr-beyaz",
+      "variants": [
+        {
+          "stock": 1,
+          "color": "Beyaz",
+          "size": "XS"
+        },
+        {
+          "size": "S",
+          "color": "Beyaz",
+          "stock": 1
+        },
+        {
+          "color": "Beyaz",
+          "stock": 1,
+          "size": "XL"
+        },
+        {
+          "stock": 1,
+          "color": "Beyaz",
+          "size": "3XL"
+        }
+      ],
+      "isNewArrival": true,
+      "productCode": "HN555"
+    }
+  ],
+  "categories": [
+    {
+      "id": "aksesuar",
+      "description": "Stili tamamlayan kemer, kravat ve diğer detaylar.",
+      "title": "Aksesuar",
+      "slug": "aksesuar"
+    },
+    {
+      "id": "giyim",
+      "description": "Modern kesimler, premium kumaşlar ve günlük şıklık.",
+      "slug": "giyim",
+      "title": "Giyim"
+    }
+  ],
+  "subcategories": [
+    {
+      "id": "sortlu-takim",
+      "slug": "sortlu-takim",
+      "title": "Şortlu Takım",
+      "filters": [
+        {
+          "values": [
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+          ],
+          "label": "Beden",
+          "id": "size"
+        },
+        {
+          "id": "color",
+          "values": [
+            "Siyah",
+            "Beyaz",
+            "Bej",
+            "Haki"
+          ],
+          "label": "Renk"
+        },
+        {
+          "values": [
+            "Pamuk",
+            "Keten",
+            "Polyester"
+          ],
+          "label": "Kumaş",
+          "id": "fabric"
+        }
+      ],
+      "description": "Yaz sezonu için rahat ve şık şortlu takımlar."
+    },
+    {
+      "id": "spor-takim",
+      "slug": "spor-takim",
+      "title": "Spor Takım",
+      "description": "Aktif yaşam için konforlu spor takımlar.",
+      "filters": [
+        {
+          "label": "Beden",
+          "values": [
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+          ],
+          "id": "size"
+        },
+        {
+          "id": "color",
+          "values": [
+            "Siyah",
+            "Gri",
+            "Lacivert",
+            "Bordo"
+          ],
+          "label": "Renk"
+        },
+        {
+          "values": [
+            "Pamuk",
+            "Polyester",
+            "Dri-Fit"
+          ],
+          "label": "Malzeme",
+          "id": "material"
+        }
+      ]
+    },
+    {
+      "id": "tisort",
+      "slug": "tisort",
+      "title": "Tişört",
+      "description": "Günlük ve şık tişört modelleri.",
+      "filters": [
+        {
+          "label": "Beden",
+          "values": [
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+          ],
+          "id": "size"
+        },
+        {
+          "id": "color",
+          "values": [
+            "Siyah",
+            "Beyaz",
+            "Gri",
+            "Lacivert"
+          ],
+          "label": "Renk"
+        },
+        {
+          "id": "collar",
+          "label": "Yaka Tipi",
+          "values": [
+            "Bisiklet Yaka",
+            "V Yaka",
+            "Polo Yaka"
+          ]
+        },
+        {
+          "id": "sleeve",
+          "label": "Kol Uzunluğu",
+          "values": [
+            "Kısa Kol",
+            "Uzun Kol"
+          ]
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "id": "cloudinary",
+      "accounts": [
+        {
+          "uploadPreset": "ikinci",
+          "cloudName": "dgyryuy30",
+          "isActive": false
+        }
+      ]
+    },
+    {
+      "id": "store",
+      "returnCargoCompany": "MNG Kargo",
+      "taxNo": "584512L",
+      "returnCargoCode": "L8542435",
+      "brandName": "HUMAN NATURE",
+      "phone": "05314948227",
+      "address": "YEŞİLKENT MH G869SK NO4/2 AVCILAR İSTANBUL",
+      "legalName": " HUMAN NATURE TEKSTİL TİCARET A.Ş.",
+      "workingHours": "Hafta içi 09:00 - 18:00",
+      "mersisNo": "858585858584747",
+      "email": "info@hnmoda.tr",
+      "returnDays": "14 GÜN İÇİNDE",
+      "taxOffice": "İSTANBUL/5615478542"
+    }
+  ],
+  "users": [],
+  "orders": []
+}
