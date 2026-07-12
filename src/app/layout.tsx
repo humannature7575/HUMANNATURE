@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { routes } from "@/lib/routes";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
+import { MetaPixel } from "@/components/MetaPixel";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -68,6 +69,7 @@ export default function RootLayout({
           <InstallPrompt />
           <Toaster theme="dark" />
         </AuthProvider>
+        <MetaPixel />
       </body>
     </html>
   );

@@ -25,3 +25,4 @@ playwright-report/
 # Local scratch files
 scratch/
 
+tsconfig.tsbuildinfo

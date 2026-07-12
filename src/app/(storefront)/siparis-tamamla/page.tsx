@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { useCartStore } from "@/store/cartStore";
-import { collection, query, getDocs, addDoc, serverTimestamp, doc, getDoc, setDoc, orderBy, where } from "firebase/firestore";
+import { collection, query, getDocs, addDoc, serverTimestamp, doc, getDoc, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { MapPin, Plus, ShoppingBag, CheckCircle, ShieldCheck, X, Copy, ExternalLink } from "lucide-react";
 import Image from "next/image";
@@ -23,6 +23,7 @@ interface PaymentSettings {
 }
 
 type PaymentMethod = "trendyol" | "shopier" | "bank" | "cod";
+type CartItemWithProductCode = { productCode?: string };
 
 const METHOD_STYLES: Record<PaymentMethod, { color: string; bg: string; border: string; label: string; icon: string }> = {
   trendyol: { color: "#FF6000", bg: "rgba(255,96,0,0.1)", border: "rgba(255,96,0,0.4)", label: "Trendyol", icon: "🛒" },
@@ -136,13 +137,8 @@ export default function CheckoutPage() {
   const createFirestoreOrder = async (method: string) => {
     if (!user) return null;
     const selectedAddress = addresses.find((a) => a.id === selectedAddressId);
-    const userOrdersQuery = query(collection(db, "orders"), where("userId", "==", user.uid));
-    const userOrdersSnapshot = await getDocs(userOrdersQuery);
-    const nextNum = String(userOrdersSnapshot.size + 1).padStart(2, "0");
-    const orderId = `HN-7575${nextNum}`;
-
     const enrichedItems = await Promise.all(items.map(async (item) => {
-      let code = (item as any).productCode;
+      let code = (item as CartItemWithProductCode).productCode;
       if (!code) {
         try {
           const snap = await getDoc(doc(db, "products", item.id));
@@ -151,7 +147,7 @@ export default function CheckoutPage() {
           } else {
             code = item.id;
           }
-        } catch (e) {
+        } catch {
           code = item.id;
         }
       }
@@ -159,7 +155,7 @@ export default function CheckoutPage() {
     }));
 
     const orderData = {
-      orderId, userId: user.uid,
+      userId: user.uid,
       customerName: selectedAddress?.fullName || `${profile?.firstName || ""} ${profile?.lastName || ""}`.trim() || "Müşteri",
       customerPhone: selectedAddress?.phone || "",
       items: enrichedItems,
@@ -168,17 +164,25 @@ export default function CheckoutPage() {
       paymentMethod: method,
       address: selectedAddress,
       isRead: false,
-      createdAt: serverTimestamp(),
     };
-    const orderRef = await addDoc(collection(db, "orders"), orderData);
-    
-    // Save a copy inside the user's specific subcollection "customer_orders"
-    if (user && user.uid) {
-      await setDoc(doc(db, "users", user.uid, "customer_orders", orderRef.id), orderData);
+
+    const token = await user.getIdToken();
+    const response = await fetch("/api/orders", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ orderData }),
+    });
+
+    if (!response.ok) {
+      throw new Error(await response.text());
     }
+    const result = (await response.json()) as { orderId: string };
     
     clearCart();
-    return { orderId, enrichedItems };
+    return { orderId: result.orderId, enrichedItems };
   };
 
   // ── Modal Actions ──

@@ -105,6 +105,14 @@ service cloud.firestore {
         && data.isRead == false;
     }
 
+    function validOrderCodeCounter(counterId, data) {
+      return counterId == 'order_code_hn_7575'
+        && data.keys().hasOnly(['value', 'updatedAt'])
+        && data.value is int
+        && data.value >= 1
+        && data.updatedAt == request.time;
+    }
+
     function publicSetting(settingId) {
       return settingId in ['store', 'categories', 'featuredCategories', 'paymentMethods', 'socialMedia'];
     }
@@ -164,6 +172,21 @@ service cloud.firestore {
         && validOrderCreate(request.resource.data);
       allow read: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
       allow update, delete: if isAdmin();
+    }
+
+    match /system_counters/{counterId} {
+      allow read: if signedIn() || isAdmin();
+      allow create: if isAdmin() || (signedIn()
+        && validOrderCodeCounter(counterId, request.resource.data)
+        && request.resource.data.value == 1);
+      allow update: if isAdmin() || (signedIn()
+        && validOrderCodeCounter(counterId, request.resource.data)
+        && request.resource.data.value == resource.data.value + 1);
+      allow delete: if isAdmin();
+    }
+
+    match /shipping_labels/{labelId} {
+      allow read, write: if isAdmin();
     }
 
     match /{document=**} {
