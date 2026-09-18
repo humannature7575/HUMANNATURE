@@ -78,6 +78,23 @@ export async function POST(request: NextRequest) {
       createdAt: FieldValue.serverTimestamp(),
     };
 
+    // If a coupon code was applied, mark it as used
+    if (orderInput.appliedCoupon?.code) {
+      const couponCode = String(orderInput.appliedCoupon.code).trim().toUpperCase();
+      const globalCouponRef = adminDb.collection("coupons").doc(couponCode);
+      const userCouponRef = adminDb.collection("users").doc(decoded.uid).collection("coupons").doc(couponCode);
+      
+      const couponUpdateData = {
+        isUsed: true,
+        usedAt: FieldValue.serverTimestamp(),
+        usedInOrderId: orderId,
+        status: "used",
+      };
+
+      transaction.set(globalCouponRef, couponUpdateData, { merge: true });
+      transaction.set(userCouponRef, couponUpdateData, { merge: true });
+    }
+
     transaction.set(counterRef, {
       value: nextValue,
       updatedAt: FieldValue.serverTimestamp(),

@@ -12,6 +12,7 @@ import { SocialIcons } from "@/components/ui/SocialIcons";
 const sidebarLinks = [
   { href: routes.account, label: "HESAP BİLGİLERİ" },
   { href: `${routes.account}/orders`, label: "SİPARİŞLERİM" },
+  { href: `${routes.account}/coupons`, label: "KUPONLARIM" },
   { href: `${routes.account}/favorites`, label: "FAVORİLERİM" },
   { href: `${routes.account}/addresses`, label: "ADRESLERİM" },
 ];
