@@ -6,6 +6,8 @@ export interface SocialMediaLinks {
   instagram?: string;
   facebook?: string;
   tiktok?: string;
+  whatsapp?: string;
+  phone?: string;
 }
 
 export function useSocialMedia() {

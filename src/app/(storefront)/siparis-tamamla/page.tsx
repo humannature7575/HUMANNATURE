@@ -131,7 +131,13 @@ export default function CheckoutPage() {
 
   const handleConfirmOrder = () => {
     if (!selectedMethod || !selectedAddressId) return;
-    setShowModal(true);
+    if (selectedMethod === "bank") {
+      handleBankConfirm();
+    } else if (selectedMethod === "cod") {
+      handleCodConfirm();
+    } else {
+      setShowModal(true);
+    }
   };
 
   const createFirestoreOrder = async (method: string) => {
@@ -196,27 +202,31 @@ export default function CheckoutPage() {
     try {
       const orderResult = await createFirestoreOrder("bank");
       if (!orderResult) return;
-      const { orderId, enrichedItems } = orderResult;
-      const wa = paymentSettings.bank?.whatsappNumber?.replace(/\D/g, "") || "";
+      const { orderId } = orderResult;
       const selectedAddress = addresses.find((a) => a.id === selectedAddressId);
       const customerName = selectedAddress?.fullName || `${profile?.firstName || ""} ${profile?.lastName || ""}`.trim() || "Müşteri";
-      const customerPhone = selectedAddress?.phone || "";
-      const addressDetails = selectedAddress ? `${selectedAddress.fullAddress} - ${selectedAddress.district}/${selectedAddress.city}` : "";
-      const orderDetails = enrichedItems.map(i => `${i.quantity}x ${i.name} (${i.productCode})`).join(", ");
-      const msgText = `Merhaba, siparişim için dekontumu gönderiyorum.\n\nSipariş No: ${orderId}\nMüşteri: ${customerName}\nTelefon: ${customerPhone}\nAdres: ${addressDetails}\nÜrünler: ${orderDetails}\nToplam Tutar: ${formatPrice(grandTotal)}`;
-      const msg = encodeURIComponent(msgText);
       setShowModal(false);
-      router.push(`${routes.checkout}/success?method=bank&wa=${wa}&msg=${msg}`);
-    } catch (e) { console.error(e); alert("Bir hata oluştu."); setPlacingOrder(false); }
+      router.push(`${routes.checkout}/success?method=bank&orderId=${encodeURIComponent(orderId)}&total=${grandTotal}&customer=${encodeURIComponent(customerName)}`);
+    } catch (e) {
+      console.error(e);
+      alert("Sipariş oluşturulurken bir hata oluştu. Lütfen tekrar deneyiniz.");
+      setPlacingOrder(false);
+    }
   };
 
   const handleCodConfirm = async () => {
     setPlacingOrder(true);
     try {
-      await createFirestoreOrder("cod");
+      const orderResult = await createFirestoreOrder("cod");
+      if (!orderResult) return;
+      const { orderId } = orderResult;
       setShowModal(false);
-      router.push(`${routes.checkout}/success?method=cod`);
-    } catch (e) { console.error(e); alert("Bir hata oluştu."); setPlacingOrder(false); }
+      router.push(`${routes.checkout}/success?method=cod&orderId=${encodeURIComponent(orderId)}&total=${grandTotal}`);
+    } catch (e) {
+      console.error(e);
+      alert("Sipariş oluşturulurken bir hata oluştu. Lütfen tekrar deneyiniz.");
+      setPlacingOrder(false);
+    }
   };
 
   const copyText = async (text: string, field: string) => {
@@ -430,64 +440,6 @@ export default function CheckoutPage() {
                 </div>
                 <Button onClick={() => handleRedirect(paymentSettings.shopier?.link || "")} className="w-full h-12 text-white font-bold uppercase tracking-widest" style={{ background: "#00C853" }}>
                   <ExternalLink className="w-4 h-4 mr-2" /> Shopier&apos;e Git
-                </Button>
-              </div>
-            )}
-
-            {/* Bank Transfer Modal */}
-            {selectedMethod === "bank" && (
-              <div className="space-y-5">
-                <p className="text-white/70 text-sm leading-relaxed">{paymentSettings.bank?.description}</p>
-                <div className="bg-black/50 border border-white/10 rounded-lg p-4 space-y-3">
-                  <div>
-                    <p className="text-xs text-white/50">Banka</p>
-                    <div className="flex items-center gap-2">
-                      <p className="text-white font-medium">{paymentSettings.bank?.bankName}</p>
-                      <button onClick={() => copyText(paymentSettings.bank?.bankName || "", 'bankName')} className="text-white/40 hover:text-white">{copiedField === 'bankName' ? <CheckCircle className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}</button>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-xs text-white/50">Hesap Sahibi</p>
-                    <div className="flex items-center gap-2">
-                      <p className="text-white font-medium">{paymentSettings.bank?.accountHolder}</p>
-                      <button onClick={() => copyText(paymentSettings.bank?.accountHolder || "", 'accountHolder')} className="text-white/40 hover:text-white">{copiedField === 'accountHolder' ? <CheckCircle className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}</button>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-xs text-white/50">IBAN</p>
-                    <div className="flex items-center gap-2">
-                      <p className="text-white font-mono font-bold">{paymentSettings.bank?.iban}</p>
-                      <button onClick={() => copyText(paymentSettings.bank?.iban || "", 'iban')} className="text-white/40 hover:text-white">{copiedField === 'iban' ? <CheckCircle className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}</button>
-                    </div>
-                  </div>
-                  {paymentSettings.bank?.barcodeImage && (
-                    <div className="pt-2">
-                      <p className="text-xs text-white/50 mb-2">Barkod</p>
-                      <div className="w-32 h-32 relative bg-white rounded flex items-center justify-center p-2 mx-auto">
-                        <Image src={paymentSettings.bank.barcodeImage} alt="Barkod" fill className="object-contain p-2" />
-                      </div>
-                    </div>
-                  )}
-                  <div className="border-t border-white/10 pt-3"><p className="text-xs text-white/50">Ödenecek Tutar</p><p className="text-white font-bold text-xl">{formatPrice(grandTotal)}</p></div>
-                </div>
-                <Button onClick={handleBankConfirm} disabled={placingOrder} className="w-full h-12 text-white font-bold uppercase tracking-widest" style={{ background: "#1565C0" }}>
-                  {placingOrder ? "İŞLENİYOR..." : "SİPARİŞİ OLUŞTUR"}
-                </Button>
-                <p className="text-xs text-white/40 text-center">Sipariş oluştuktan sonra dekontu WhatsApp üzerinden göndermeniz gerekmektedir.</p>
-              </div>
-            )}
-
-            {/* Cash on Delivery Modal */}
-            {selectedMethod === "cod" && (
-              <div className="space-y-5">
-                <p className="text-white/70 text-sm leading-relaxed">{paymentSettings.cod?.description}</p>
-                <div className="bg-black/50 border border-white/10 rounded-lg p-4 space-y-3">
-                  <div className="flex justify-between text-sm"><span className="text-white/60">Ara Toplam</span><span className="text-white">{formatPrice(total)}</span></div>
-                  <div className="flex justify-between text-sm" style={{ color: "#FFC107" }}><span>Kapıda Ödeme Ücreti (%{codFee})</span><span>+{formatPrice(codExtra)}</span></div>
-                  <div className="border-t border-white/10 pt-3 flex justify-between"><span className="text-white font-bold">Toplam</span><span className="text-white font-bold text-xl">{formatPrice(grandTotal)}</span></div>
-                </div>
-                <Button onClick={handleCodConfirm} disabled={placingOrder} className="w-full h-12 text-black font-bold uppercase tracking-widest" style={{ background: "#FFC107" }}>
-                  {placingOrder ? "İŞLENİYOR..." : "SİPARİŞİ ONAYLA"}
                 </Button>
               </div>
             )}
